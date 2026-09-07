@@ -49,13 +49,13 @@ export const authentication = async (req, res, next) => {
     
       if (!user) {
         return next(new notFoundException('user'))    }   
-    req.user=user//here i send the data of user to next middleware
+    req.user=user
     next()
 }
 
 export const allowTo = (...roles) => {
   return async (req, res, next) => {
-    const user = req.user //always after auth func.
+    const user = req.user 
     if (!roles.includes(user.role)) {
       throw  new notAuthorized()
     }

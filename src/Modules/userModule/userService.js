@@ -68,7 +68,7 @@ export const restoreAccount = async (req, res) => {
     throw new Error('user not deleted', { cause: 400 })
   }
 
-  if (user.deletedBy.toString() !== req.user._id.toString()) { //can't compre 2 refrences
+  if (user.deletedBy.toString() !== req.user._id.toString()) { 
     throw new Error("You can't restore this account", { cause: 401 })
   }
   user.deletedBy = undefined
@@ -82,7 +82,6 @@ export const hardDelete = async (req, res) => {
  if(user.profileImage.length > 0 || user.coverImages?.length > 0) {
   await deleteByPrefix({ prefix: `${process.env.CLOUD_FOLDERNAME}/users/${user._id}` })
   await deleteFolder( {folder:`./users/${user._id}`})
- //must delete all images in folder before delete the folder itself
  }
  await userModel.deleteOne(user._id)
  return successHandler({res})
@@ -91,18 +90,16 @@ export const hardDelete = async (req, res) => {
 export const profileImageLocal = async (req, res) => { 
   console.log(req.file)
    
- // const path = `${req.file.destination}/${req.file.filename}` 
-  const user = req.user//logged in user from auth middleware  
+  const user = req.user
    if (user.profileImage) {
     try {
-      await fs.access(user.profileImage) // Check if file exists [help to avoid error from unlink].
-      await fs.unlink(user.profileImage) // Delete old image['unlink' when delete file but when delete folder we use 'rmdir']
+      await fs.access(user.profileImage) 
+      await fs.unlink(user.profileImage) 
     } catch (error) {
       console.log("Old image does not exist, skipping delete.")
     }
   }
-  // user.profileImage = path//save new image path in db
-  // await user.save()
+ 
   return successHandler({ res })
 }
 
@@ -126,7 +123,7 @@ export const coverImages = async (req, res) => {
     const user = req.user
     const paths = []
     
-    req.files.map(file => {//loop on files array to get each file path and push it to paths array
+    req.files.map(file => {
         paths.push(file.path)
     })
     

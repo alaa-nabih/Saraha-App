@@ -100,10 +100,7 @@ export const getUserProfile = async (req, res) => {
 }
 
 export const confirmEmail = async (req, res, next) => {
-  // get data from req
   const { email,otp } = req.body
-
-  // find and update user
   
   const user = await  findByEmail(userModel,email)
   if (!user)
@@ -117,16 +114,12 @@ export const confirmEmail = async (req, res, next) => {
 
   if(!compareSync(otp,user.emailOtp.otp))    
     return next(new inValidOtp())
-
-  //update "confirmed" to be 'true'
   await user.updateOne({
     confirmed:true,
     $unset:{
       emailOtp:""
     }
   })
-  
-    // send response
      successHandler({res, status:200,msg: "congratulations 🎉"})
 }
 

@@ -2,7 +2,7 @@ import { Router } from "express";
 import * as messageService from "./message.service.js"
 import { authentication } from "../../Middlewares/auth.js";
 const router = Router({
-    mergeParams:true  //Preserve the req.params values from the parent router[user].
+    mergeParams:true  
 })
 
 

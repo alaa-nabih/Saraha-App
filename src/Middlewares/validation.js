@@ -4,14 +4,14 @@ import { StatusCodes } from "http-status-codes"
 export const validation = (schema) => {
   return (req, res, next) => {
 
-    const data={ //collect data from anywhere
+    const data={ 
       ...req.body,
       ...req.params,
       ...req.query,
-      ...req.file  //if there is any file uploaded 
+      ...req.file 
     }
 
-    const result = schema.validate(data, { abortEarly: false }) //abortEarly => show all errors depend on validation rules in the same time
+    const result = schema.validate(data, { abortEarly: false })
     if (result.error) {
       throw new Error(result.error, { cause: StatusCodes.BAD_REQUEST })
     }

@@ -14,7 +14,7 @@ export const storeFile = (path = "general") => {
     const file = req.file
     const fullPath = await handleFilePath(file, path)
     const buffer = file.buffer
-    await fs.writeFile(fullPath, buffer)//store in my pc 
+    await fs.writeFile(fullPath, buffer)
     next()
   }
 }

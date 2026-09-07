@@ -16,16 +16,15 @@ const bootstrap = async () => {
   const port = process.env.PORT
   
   app.use(express.json())
-https://github.com/Hajar-Elewa/sarahaApp.git
   app.use(corse())
   app.use(morgan('combined'))
   app.use(helmet())//for security http headers 
 
   app.use(rateLimit({//to limit requests from same IP
-  windowMs: 2 * 60 * 1000,// 2 minutes
-  limit: 10,// limit each IP to 10 requests per windowMs
-  legacyHeaders: false,// Disable the `X-RateLimit-*` headers
-  standardHeaders: true,// Enable the `RateLimit-*` headers
+  windowMs: 2 * 60 * 1000,
+  limit: 10,
+  legacyHeaders: false,
+  standardHeaders: true,
 }))
 
   await connectDB()
@@ -34,13 +33,12 @@ https://github.com/Hajar-Elewa/sarahaApp.git
     res.json({msg:'Done'})
   })
 
- //use routers from modules
     app.use("/auth", authRouter)
     app.use("/user", userRouter)
     app.use("/message",messageModel)
   
 
-    app.use('/uploads',express.static('./uploads'))//to make uploads folder public [to access files directly from browser]
+    app.use('/uploads',express.static('./uploads'))
   
     app.all("{/*s}", (req, res, next) => {
     return next(new notFoundException('url'))

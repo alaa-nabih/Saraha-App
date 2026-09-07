@@ -39,7 +39,7 @@ userRouter.patch(
   userRouter.patch(
     '/cover-image-upload',
     authentication,
-    upLoadToCloud().array('coverImage', 5),//max 5 images
+    upLoadToCloud().array('coverImage', 5),
     userervices.coverImages)  
    
    userRouter.get("/get-user/:id",userervices.getUserById) 
